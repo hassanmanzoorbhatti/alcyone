@@ -157,9 +157,20 @@ export function Footer() {
       </div>
 
       <div className="border-t border-clause-border px-4 py-6 md:px-8">
-        <p className="font-grotesk text-[12px] leading-[1.7] text-clause-muted">
-          © {FIRM.legalName}. All rights reserved. Authorised and regulated by the Solicitors Regulation Authority, SRA practice reference {FIRM.sra}. Registered in England and Wales under company number {FIRM.companyNumber}.
-        </p>
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
+          <p className="max-w-[920px] font-grotesk text-[12px] leading-[1.7] text-clause-muted">
+            © {FIRM.legalName}. All rights reserved. Authorised and regulated by the Solicitors Regulation Authority, SRA practice reference {FIRM.sra}. Registered in England and Wales under company number {FIRM.companyNumber}.
+          </p>
+          <p className="shrink-0 font-grotesk text-[12px] text-clause-muted">
+            Designed with <span aria-label="love">❤️</span> by{" "}
+            <a
+              href="mailto:hassanmanzoorbhatti@gmail.com"
+              className="text-clause-heading underline decoration-clause-border underline-offset-4 transition-opacity hover:opacity-65"
+            >
+              Hassan Manzoor
+            </a>
+          </p>
+        </div>
       </div>
       <Ribbon className="h-12" />
     </footer>

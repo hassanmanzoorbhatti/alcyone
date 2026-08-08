@@ -7,6 +7,7 @@ import { HERO_DELAY } from "@/lib/motion";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { LeadershipBlock } from "@/components/site/Leadership";
+import { Testimonials } from "@/components/site/Testimonials";
 import { FinalCta, StatsBand } from "@/components/site/Sections";
 import { Eyebrow, PrimaryButton, Ribbon, ScrollDot, TextLink } from "@/components/site/SiteUi";
 import { HERO_STATS, NETWORK_LOCATIONS } from "@/lib/site-data";
@@ -51,8 +52,8 @@ function Hero() {
           alt="Professional immigration solicitor in a London office"
           width={1536}
           height={1024}
-          wrapperClassName="h-full w-full"
-          className="aspect-[1/1.2] w-full object-cover object-[center_25%]"
+          wrapperClassName="w-full md:h-[650px]"
+          className="aspect-[1/1.2] w-full object-cover object-[center_25%] md:h-[650px] md:aspect-auto"
         />
       </div>
 
@@ -479,6 +480,7 @@ function Index() {
         <SuccessStories />
         <ExperienceSection />
         <LeadershipBlock />
+        <Testimonials />
         <FinalCta />
         <Footer />
       </div>

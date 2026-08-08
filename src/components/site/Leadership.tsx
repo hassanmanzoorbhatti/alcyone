@@ -11,7 +11,7 @@ export function LeadershipBlock() {
           src={zahraPortrait}
           alt="Zahra Mohamed, Founder and Principal Solicitor at Alcyone Law"
           wrapperClassName="h-full"
-          className="aspect-square h-full w-full object-cover object-top"
+          className="aspect-square h-full w-full object-cover object-top md:object-center"
         />
       </div>
       <div className="px-4 py-14 md:px-8 md:py-20">
