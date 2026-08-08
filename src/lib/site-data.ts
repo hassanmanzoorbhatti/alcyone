@@ -26,3 +26,25 @@ export const NAV_LINKS = [
   { label: "Insights", to: "/coming-soon" },
   { label: "Contact", to: "/coming-soon" },
 ] as const;
+
+export const NETWORK_LOCATIONS = [
+  "Private Immigration",
+  "Business Immigration",
+  "Family Law",
+  "British Citizenship",
+  "Asylum & Human Rights",
+  "Appeals & Reviews",
+] as const;
+
+export const STATS = [
+  { number: "10+", label: "Years of specialist experience" },
+  { number: "SRA", label: "Authorised & regulated practice" },
+  { number: "London", label: "Great Portland Street office" },
+  { number: "1:1", label: "Personal, client-focused advice" },
+] as const;
+
+export const HERO_STATS = [
+  { number: "10+", label: "Years of specialist experience" },
+  { number: "SRA", label: "Regulated practice — 8014879" },
+  { number: "London", label: "Great Portland Street" },
+] as const;

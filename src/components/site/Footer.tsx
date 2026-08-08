@@ -1,63 +1,167 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { FIRM } from "@/lib/site-data";
-import { Wordmark } from "./SiteUi";
+import { Ribbon, Wordmark } from "./SiteUi";
 
-const SERVICES = ["Private Immigration", "Business Immigration", "Family Law"];
-const COMPANY = ["About Alcyone", "Our People", "Success Stories", "News & Insights", "Careers", "Fees"];
-const LEGAL = ["Privacy Statement", "Cookie Policy", "Terms & Conditions", "Legal Notice", "Complaints Procedure"];
+const SERVICE_LINKS = [
+  "Private Immigration",
+  "Business Immigration",
+  "Family Law",
+  "Visas & Settlement",
+  "Citizenship & Human Rights",
+  "Appeals & Reviews",
+];
 
-function Heading({ children }: { children: string }) {
-  return <h4 className="font-grotesk text-[11px] font-semibold uppercase tracking-[0.18em] text-clause-stone">{children}</h4>;
+const COMPANY_LINKS = [
+  "About Alcyone",
+  "Our People",
+  "Success Stories",
+  "News & Insights",
+  "Careers",
+  "Fees",
+];
+
+const LEGAL_LINKS = [
+  "Privacy Statement",
+  "Cookie Policy",
+  "Terms & Conditions",
+  "Legal Notice",
+  "Complaints Procedure",
+];
+
+function ColumnHeading({ children }: { children: string }) {
+  return (
+    <h4 className="font-grotesk text-[12px] font-semibold uppercase tracking-[0.14em] text-clause-muted">
+      {children}
+    </h4>
+  );
+}
+
+function ContactRow({
+  icon: Icon,
+  children,
+}: {
+  icon: typeof Phone;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <Icon className="mt-[3px] h-4 w-4 shrink-0 text-clause-sage" strokeWidth={1.75} />
+      <div className="min-w-0 font-grotesk text-[15px] leading-[1.7] text-clause-cream">
+        {children}
+      </div>
+    </div>
+  );
 }
 
 export function Footer() {
   return (
-    <footer className="bg-clause-ink text-clause-onaccent">
-      <div className="mx-auto max-w-[1440px] px-4 py-16 md:px-8 md:py-24">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.25fr] lg:gap-14">
+    <footer id="contact" className="scroll-mt-20 border-x border-clause-border bg-clause-bg">
+      <div className="px-4 py-16 md:px-8 md:py-24">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-12">
           <div>
-            <Wordmark className="!text-clause-onaccent" />
-            <p className="mt-5 max-w-[330px] font-grotesk text-[15px] leading-[1.7] text-clause-stone">{FIRM.description}</p>
+            <Wordmark />
+            <p className="mt-5 max-w-[300px] font-grotesk text-[15px] leading-[1.6] text-clause-muted">
+              {FIRM.description}
+            </p>
             <div className="mt-7 border-l border-clause-sage pl-4">
-              <p className="font-grotesk text-[12px] uppercase tracking-[0.14em] text-clause-stone">SRA regulated</p>
-              <p className="mt-1 font-serif-display text-[20px]">Reference {FIRM.sra}</p>
+              <p className="font-grotesk text-[11px] font-semibold uppercase tracking-[0.14em] text-clause-muted">
+                SRA Regulated
+              </p>
+              <p className="mt-1 font-serif-display text-[18px] text-clause-heading">
+                Reference {FIRM.sra}
+              </p>
             </div>
           </div>
+
           <div>
-            <Heading>Expertise</Heading>
+            <ColumnHeading>Expertise</ColumnHeading>
             <ul className="mt-5 space-y-3">
-              {SERVICES.map((s) => <li key={s}><Link to="/coming-soon" className="font-grotesk text-[15px] text-clause-onaccent/85 transition-opacity hover:opacity-60">{s}</Link></li>)}
+              {SERVICE_LINKS.map((service) => (
+                <li key={service}>
+                  <Link
+                    to="/coming-soon"
+                    className="font-grotesk text-[15px] text-clause-cream transition-opacity hover:opacity-70"
+                  >
+                    {service}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
           <div>
-            <Heading>Firm</Heading>
+            <ColumnHeading>Firm</ColumnHeading>
             <ul className="mt-5 space-y-3">
-              {COMPANY.map((s) => <li key={s}><Link to="/coming-soon" className="font-grotesk text-[15px] text-clause-onaccent/85 transition-opacity hover:opacity-60">{s}</Link></li>)}
+              {COMPANY_LINKS.map((item) => (
+                <li key={item}>
+                  <Link
+                    to="/coming-soon"
+                    className="font-grotesk text-[15px] text-clause-cream transition-opacity hover:opacity-70"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            <Heading>Legal</Heading>
-            <ul className="mt-5 space-y-3">
-              {LEGAL.map((s) => <li key={s}><Link to="/coming-soon" className="font-grotesk text-[14px] text-clause-onaccent/65 transition-opacity hover:opacity-60">{s}</Link></li>)}
-            </ul>
+            <div className="mt-8">
+              <ColumnHeading>Legal</ColumnHeading>
+              <ul className="mt-5 space-y-3">
+                {LEGAL_LINKS.map((item) => (
+                  <li key={item}>
+                    <Link
+                      to="/coming-soon"
+                      className="font-grotesk text-[15px] text-clause-cream/70 transition-opacity hover:opacity-70"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
           <div>
-            <Heading>Contact</Heading>
-            <div className="mt-5 space-y-4 font-grotesk text-[14px] leading-[1.7] text-clause-onaccent/85">
-              <div className="flex gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-clause-sage"/><address className="not-italic">{FIRM.address.map((line)=><div key={line}>{line}</div>)}</address></div>
-              <div className="flex gap-3"><Phone className="mt-1 h-4 w-4 shrink-0 text-clause-sage"/><a href={`tel:${FIRM.officeTel}`}>{FIRM.office}</a></div>
-              <div className="flex gap-3"><Smartphone className="mt-1 h-4 w-4 shrink-0 text-clause-sage"/><a href={`tel:${FIRM.mobileTel}`}>{FIRM.mobile}</a></div>
-              <div className="flex gap-3"><Mail className="mt-1 h-4 w-4 shrink-0 text-clause-sage"/><a href={`mailto:${FIRM.email}`}>{FIRM.email}</a></div>
-              <div className="flex gap-3"><Clock className="mt-1 h-4 w-4 shrink-0 text-clause-sage"/><span>Monday–Friday<br/>9:00 AM–5:00 PM</span></div>
+            <ColumnHeading>Contact</ColumnHeading>
+            <div className="mt-5 flex flex-col gap-4">
+              <ContactRow icon={MapPin}>
+                <address className="not-italic">
+                  {FIRM.address.map((line) => (
+                    <div key={line}>{line}</div>
+                  ))}
+                </address>
+              </ContactRow>
+              <ContactRow icon={Phone}>
+                <a href={`tel:${FIRM.officeTel}`} className="hover:opacity-70">
+                  {FIRM.office}
+                </a>
+              </ContactRow>
+              <ContactRow icon={Smartphone}>
+                <a href={`tel:${FIRM.mobileTel}`} className="hover:opacity-70">
+                  {FIRM.mobile}
+                </a>
+              </ContactRow>
+              <ContactRow icon={Mail}>
+                <a href={`mailto:${FIRM.email}`} className="break-all hover:opacity-70">
+                  {FIRM.email}
+                </a>
+              </ContactRow>
+              <ContactRow icon={Clock}>
+                Monday–Friday
+                <br />
+                9:00 AM–5:00 PM
+              </ContactRow>
             </div>
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-4 py-7 font-grotesk text-[12px] leading-[1.6] text-clause-stone md:px-8">
-          <p>© 2026 {FIRM.legalName}. All rights reserved.</p>
-          <p className="max-w-[1100px]">Alcyone Law Ltd is authorised and regulated by the Solicitors Regulation Authority. SRA practice reference {FIRM.sra}. Registered in England and Wales under company number {FIRM.companyNumber}.</p>
-        </div>
+
+      <div className="border-t border-clause-border px-4 py-6 md:px-8">
+        <p className="font-grotesk text-[12px] leading-[1.7] text-clause-muted">
+          © {FIRM.legalName}. All rights reserved. Authorised and regulated by the Solicitors Regulation Authority, SRA practice reference {FIRM.sra}. Registered in England and Wales under company number {FIRM.companyNumber}.
+        </p>
       </div>
+      <Ribbon className="h-12" />
     </footer>
   );
 }

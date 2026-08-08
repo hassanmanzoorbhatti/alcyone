@@ -1,75 +1,488 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, MapPin, Phone, Star } from "lucide-react";
+import { ArrowUpRight, MessagesSquare, ShieldCheck, LifeBuoy } from "lucide-react";
 import { AnimatedText } from "@/components/motion/AnimatedText";
 import { RevealImage } from "@/components/motion/RevealImage";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
+import { HERO_DELAY } from "@/lib/motion";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
-import { ConsultationForm } from "@/components/site/ConsultationForm";
-import { Eyebrow, TextLink } from "@/components/site/SiteUi";
-import { FIRM } from "@/lib/site-data";
+import { LeadershipBlock } from "@/components/site/Leadership";
+import { FinalCta, StatsBand } from "@/components/site/Sections";
+import { Eyebrow, PrimaryButton, Ribbon, ScrollDot, TextLink } from "@/components/site/SiteUi";
+import { HERO_STATS, NETWORK_LOCATIONS } from "@/lib/site-data";
+import { PRIMARY_SERVICES, type Service } from "@/lib/services";
 import heroImage from "../assets/alcyone-hero.png";
 import aboutImage from "../assets/alcyone-about.jpg";
-import privateImg from "../assets/service-private.jpg";
-import businessImg from "../assets/service-business.jpg";
-import familyImg from "../assets/service-family.jpg";
+import ctaImage from "../assets/alcyone-cta.jpg";
 import storyFamily from "../assets/story-family.jpg";
 import storyBusiness from "../assets/story-business.jpg";
 import storyVisitor from "../assets/story-visitor.jpg";
-import ctaImg from "../assets/alcyone-cta.jpg";
-import zahraImg from "../assets/zahra.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Alcyone Law — Immigration & Family Solicitors London" },
-      { name: "description", content: "Specialist immigration and family law advice for individuals, families and businesses in London." },
+      {
+        name: "description",
+        content:
+          "Specialist immigration and family law advice for individuals, families and businesses in London.",
+      },
+      { property: "og:title", content: "Alcyone Law — Immigration & Family Solicitors London" },
+      {
+        property: "og:description",
+        content:
+          "Specialist immigration and family law advice delivered with clarity, precision and personal understanding.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });
 
-const services = [
-  { n:"01", title:"Private Immigration", text:"Visas, settlement, citizenship, asylum and complex personal immigration matters.", img: privateImg, tags:["Visa Applications","British Citizenship","Asylum & Human Rights"] },
-  { n:"02", title:"Business Immigration", text:"Strategic immigration support for businesses, entrepreneurs and professionals.", img: businessImg, tags:["Sponsor Licences","Skilled Workers","Business Mobility"] },
-  { n:"03", title:"Family Law", text:"Thoughtful advice for divorce, separation and child arrangements.", img: familyImg, tags:["Divorce","Child Arrangements","Family Advice"] },
+function Hero() {
+  return (
+    <section className="grid grid-cols-1 md:grid-cols-[52fr_48fr]">
+      <div className="md:order-2 md:border-l md:border-clause-border">
+        <RevealImage
+          src={heroImage}
+          alt="Professional immigration solicitor in a London office"
+          width={1536}
+          height={1024}
+          wrapperClassName="h-full w-full"
+          className="aspect-[1/1.2] w-full object-cover object-[center_25%]"
+        />
+      </div>
+
+      <div className="flex flex-col justify-center px-4 py-12 md:order-1 md:px-12 md:py-20">
+        <Reveal immediate delay={HERO_DELAY - 0.1}>
+          <Eyebrow>Immigration & Family Solicitors · London</Eyebrow>
+        </Reveal>
+        <AnimatedText
+          as="h1"
+          immediate
+          delay={HERO_DELAY}
+          text={"Legal clarity for life's\nmost important\ndecisions."}
+          className="mt-5 font-serif-display font-normal leading-[1.12] text-clause-heading text-[30px] md:text-[clamp(1.75rem,0.8rem+2.2vw,2.375rem)]"
+        />
+
+        <RevealGroup immediate delay={HERO_DELAY + 0.35} stagger={0.12}>
+          <RevealItem>
+            <p
+              className="mt-5 font-grotesk text-[15px] leading-[1.6] text-clause-muted md:mt-6 md:text-[17px]"
+              style={{ maxWidth: "470px" }}
+            >
+              Specialist immigration and family law advice for individuals, families and businesses,
+              delivered with clarity, precision and a deeply personal understanding of what is at stake.
+            </p>
+          </RevealItem>
+          <RevealItem className="mt-10 md:mt-14">
+            <div className="flex flex-col items-stretch gap-5 sm:flex-row sm:items-center sm:gap-7">
+              <PrimaryButton href="#contact" className="whitespace-nowrap">
+                Book a Consultation
+              </PrimaryButton>
+              <div className="flex items-center sm:border-l sm:border-clause-border sm:pl-7">
+                <div>
+                  <p className="font-grotesk text-[12px] font-semibold uppercase tracking-[0.13em] text-clause-sage">
+                    SRA Regulated
+                  </p>
+                  <p className="mt-1.5 font-grotesk text-[13px] leading-[1.4] text-clause-muted">
+                    Practice reference 8014879
+                  </p>
+                </div>
+              </div>
+            </div>
+          </RevealItem>
+        </RevealGroup>
+      </div>
+    </section>
+  );
+}
+
+function HeroStats() {
+  return (
+    <RevealGroup
+      className="grid grid-cols-1 border-t border-clause-border sm:grid-cols-3"
+      stagger={0.12}
+    >
+      {HERO_STATS.map((s, i) => (
+        <RevealItem
+          key={s.label}
+          className={`border-clause-border px-5 py-9 text-center sm:py-14 ${
+            i > 0 ? "border-t sm:border-l sm:border-t-0" : ""
+          }`}
+        >
+          <div className="font-serif-display font-normal leading-[1.05] text-clause-heading text-[clamp(2.1rem,1.1rem+3.5vw,3.4rem)]">
+            {s.number}
+          </div>
+          <div className="mx-auto mt-3 max-w-[220px] font-grotesk text-[14px] leading-[1.4] text-clause-muted md:text-[15px]">
+            {s.label}
+          </div>
+        </RevealItem>
+      ))}
+    </RevealGroup>
+  );
+}
+
+function Introduction() {
+  return (
+    <section className="border-t border-clause-border px-4 py-16 md:px-24 md:py-28">
+      <div className="mx-auto max-w-[860px] text-center">
+        <Reveal>
+          <Eyebrow>About Alcyone Law</Eyebrow>
+        </Reveal>
+        <AnimatedText
+          as="h2"
+          text="Technical excellence. Deeply human advice."
+          stagger={0.02}
+          className="mt-6 font-serif-display font-normal text-clause-heading text-[clamp(1.5rem,0.95rem+2.4vw,2.5rem)] leading-[1.25]"
+        />
+        <Reveal delay={0.2}>
+          <p className="mx-auto mt-6 max-w-[680px] font-grotesk text-[15px] leading-[1.7] text-clause-muted md:text-[17px]">
+            Alcyone Law provides specialist immigration and family law advice from London. The firm
+            combines careful legal analysis with clear communication and a personal understanding of
+            the individuals, families and businesses behind every matter.
+          </p>
+        </Reveal>
+        <Reveal delay={0.28}>
+          <div className="mt-8 flex justify-center">
+            <TextLink to="/coming-soon">About Alcyone Law</TextLink>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ExpertiseStrip() {
+  return (
+    <section className="border-t border-clause-border px-4 py-12 md:px-8 md:py-24">
+      <Reveal className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-16">
+        <p className="max-w-[520px] font-serif-display text-[19px] leading-[1.35] text-clause-cream md:text-[22px]">
+          Focused legal support for life, family and business across borders.
+        </p>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 md:gap-x-10 md:gap-y-5 md:text-right">
+          {NETWORK_LOCATIONS.map((item) => (
+            <span
+              key={item}
+              className="font-grotesk text-[12px] uppercase tracking-[0.12em] text-clause-muted md:text-[13px]"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function ServiceCard({ service }: { service: Service }) {
+  return (
+    <Link to="/coming-soon" className="group flex h-full flex-col" aria-label={service.name}>
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <RevealImage
+          src={service.image!}
+          alt={service.name}
+          wrapperClassName="h-full w-full"
+          className="h-full w-full object-cover"
+          hoverScale
+        />
+        <div className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center bg-clause-bg md:h-12 md:w-12">
+          <ArrowUpRight
+            className="h-4 w-4 text-clause-pink transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            strokeWidth={1.5}
+          />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col p-6 md:p-8">
+        <span className="font-grotesk text-[12px] font-semibold tracking-[0.14em] text-clause-sage">
+          {service.number}
+        </span>
+        <h3 className="mt-3 font-serif-display text-[22px] leading-[1.2] text-clause-heading md:text-[24px]">
+          {service.name}
+        </h3>
+        <p className="mt-3 font-grotesk text-[15px] leading-[1.6] text-clause-muted md:text-[16px]">
+          {service.description}
+        </p>
+      </div>
+    </Link>
+  );
+}
+
+function Services() {
+  return (
+    <section className="border-t border-clause-border">
+      <div className="border-b border-clause-border px-4 py-16 md:px-24 md:py-24">
+        <div className="mx-auto max-w-[680px] md:text-center">
+          <Reveal>
+            <Eyebrow>Our Expertise</Eyebrow>
+          </Reveal>
+          <AnimatedText
+            as="h2"
+            text={"Specialist advice for\nlife across borders."}
+            className="mt-5 font-serif-display font-normal leading-[1.12] text-clause-heading text-[clamp(1.75rem,1rem+3vw,3rem)]"
+          />
+          <Reveal delay={0.15}>
+            <p className="mt-5 font-grotesk text-[16px] leading-[1.6] text-clause-muted md:text-[17px]">
+              Focused expertise in UK immigration and family law, tailored to individuals, families
+              and businesses.
+            </p>
+          </Reveal>
+        </div>
+      </div>
+
+      <div className="border-b border-clause-border md:px-8">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 md:gap-x-8" stagger={0.12}>
+          {PRIMARY_SERVICES.map((service) => (
+            <RevealItem
+              key={service.name}
+              className="h-full border-b border-clause-border md:border-x md:border-b-0 md:border-clause-border"
+            >
+              <ServiceCard service={service} />
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </div>
+
+      <div className="border-b border-clause-border px-4 py-10 md:px-24 md:py-14">
+        <div className="flex justify-center">
+          <PrimaryButton to="/coming-soon" className="w-full sm:w-auto">
+            View All Services
+          </PrimaryButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const APPROACH = [
+  {
+    icon: MessagesSquare,
+    title: "Clear Communication",
+    body: "Straightforward legal guidance without unnecessary complexity or uncertainty.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Strategic Preparation",
+    body: "Each matter is considered carefully, with risks anticipated and the next steps clearly planned.",
+  },
+  {
+    icon: LifeBuoy,
+    title: "Personal Support",
+    body: "Advice shaped around the person, family or business behind the legal issue.",
+  },
 ];
 
-const stories = [
-  { tag:"FAMILY IMMIGRATION", title:"Reuniting a family after 20 years apart", text:"Overcame complex immigration history to secure leave to remain.", img: storyFamily },
-  { tag:"BUSINESS IMMIGRATION", title:"From refusal to sponsor licence approval", text:"Helped a growing business secure a sponsor licence after rejection.", img: storyBusiness },
-  { tag:"VISITOR IMMIGRATION", title:"Uniting a family during bereavement", text:"Secured a UK visit visa after three previous refusals.", img: storyVisitor },
-];
+function Approach() {
+  return (
+    <section className="px-4 py-16 md:px-24 md:py-28">
+      <div className="text-center">
+        <Reveal>
+          <Eyebrow>Our Approach</Eyebrow>
+        </Reveal>
+        <AnimatedText
+          as="h2"
+          text="Clear thinking when the path feels uncertain."
+          className="mt-5 font-serif-display font-normal leading-[1.15] text-clause-heading text-[clamp(1.625rem,1rem+2.7vw,2.5rem)]"
+        />
+      </div>
 
-function Hero(){return <section className="grid min-h-[680px] grid-cols-1 border-b border-clause-border md:grid-cols-[56fr_44fr]">
-  <div className="flex flex-col justify-center px-4 pb-14 pt-28 md:px-10 md:py-24 lg:px-16">
-    <Reveal immediate><Eyebrow>Immigration & Family Solicitors · London</Eyebrow></Reveal>
-    <AnimatedText immediate as="h1" text={"Legal clarity for life's\nmost important decisions."} className="mt-6 max-w-[760px] font-serif-display text-[44px] font-normal leading-[0.98] text-clause-heading sm:text-[58px] lg:text-[72px]" />
-    <Reveal immediate delay={0.35}><p className="mt-7 max-w-[620px] font-grotesk text-[16px] leading-[1.75] text-clause-muted md:text-[18px]">Specialist immigration and family law advice for individuals, families and businesses, delivered with clarity, precision and a deeply personal understanding of what is at stake.</p></Reveal>
-    <Reveal immediate delay={0.5} className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center"><a href="#contact" className="group inline-flex min-h-[52px] items-center justify-center gap-3 bg-clause-pink px-7 font-grotesk text-[13px] font-bold uppercase tracking-[0.08em] text-clause-onaccent">Book a Consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1"/></a><Link to="/coming-soon" className="inline-flex min-h-[52px] items-center gap-3 font-grotesk text-[13px] font-semibold uppercase tracking-[0.08em] text-clause-pink">Explore Our Expertise <ArrowUpRight className="h-4 w-4"/></Link></Reveal>
-    <Reveal immediate delay={0.62} className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-clause-border pt-5 font-grotesk text-[12px] uppercase tracking-[0.12em] text-clause-muted"><span>SRA Regulated</span><span>London Based</span><span>10+ Years' Experience</span></Reveal>
-  </div>
-  <div className="relative min-h-[520px] overflow-hidden border-t border-clause-border md:min-h-0 md:border-l md:border-t-0"><img src={heroImage} alt="Professional immigration solicitor in London" className="absolute inset-0 h-full w-full object-cover object-center"/><div className="absolute inset-0 bg-gradient-to-t from-[#271019]/30 via-transparent to-transparent"/><div className="absolute bottom-5 left-5 right-5 bg-[rgba(247,243,238,.94)] p-5 backdrop-blur md:left-7 md:right-auto md:min-w-[300px]"><p className="font-grotesk text-[10px] font-semibold uppercase tracking-[.18em] text-clause-pink">London office</p><p className="mt-2 font-serif-display text-[20px] leading-[1.2] text-clause-heading">Great Portland Street<br/>W1W 5PF</p></div></div>
-</section>}
+      <RevealGroup
+        className="mt-12 grid grid-cols-1 gap-10 md:mt-20 md:grid-cols-3 md:gap-14"
+        stagger={0.12}
+      >
+        {APPROACH.map(({ icon: Icon, title, body }) => (
+          <RevealItem
+            key={title}
+            className="flex gap-5 md:flex-col md:items-center md:gap-0 md:text-center"
+          >
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-clause-border bg-clause-surface md:h-16 md:w-16">
+              <Icon className="h-5 w-5 text-clause-sage md:h-6 md:w-6" strokeWidth={1.5} />
+            </div>
+            <div className="md:mt-6">
+              <h3 className="font-serif-display text-[19px] leading-[1.3] text-clause-heading md:text-[21px]">
+                {title}
+              </h3>
+              <p className="mt-2 max-w-[300px] font-grotesk text-[15px] leading-[1.6] text-clause-muted md:mx-auto">
+                {body}
+              </p>
+            </div>
+          </RevealItem>
+        ))}
+      </RevealGroup>
+    </section>
+  );
+}
 
-function Trust(){const x=[["10+ Years","Specialist legal experience"],["London","Great Portland Street"],["SRA 8014879","Regulated practice"],["Personal Approach","Advice tailored to every matter"]]; return <section className="grid border-b border-clause-border sm:grid-cols-2 lg:grid-cols-4">{x.map((a,i)=><div key={a[0]} className={`px-5 py-8 md:px-8 md:py-10 ${i>0?'border-t sm:border-t-0 sm:border-l':''}`}><p className="font-serif-display text-[26px] text-clause-heading">{a[0]}</p><p className="mt-2 font-grotesk text-[13px] text-clause-muted">{a[1]}</p></div>)}</section>}
+const STORIES = [
+  {
+    number: "01",
+    category: "Family Immigration",
+    title: "Reuniting a family after 20 years apart",
+    description: "A complex immigration history navigated to help a family move forward together.",
+    image: storyFamily,
+  },
+  {
+    number: "02",
+    category: "Business Immigration",
+    title: "From refusal to sponsor licence approval",
+    description: "Strategic support for a growing business following an earlier sponsor licence refusal.",
+    image: storyBusiness,
+  },
+  {
+    number: "03",
+    category: "Visitor Immigration",
+    title: "Supporting a family during bereavement",
+    description: "A visitor immigration matter approached carefully after previous refusals.",
+    image: storyVisitor,
+  },
+] as const;
 
-function About(){return <section className="grid border-b border-clause-border md:grid-cols-2"><div className="order-2 p-4 md:order-1 md:p-8 lg:p-12"><RevealImage src={aboutImage} alt="Central London architecture" wrapperClassName="h-full min-h-[420px]" className="h-full w-full object-cover"/></div><div className="order-1 flex flex-col justify-center px-4 py-16 md:order-2 md:px-12 lg:px-20"><Reveal><Eyebrow>About Alcyone</Eyebrow></Reveal><AnimatedText as="h2" text={"Technical excellence.\nDeeply human advice."} className="mt-5 font-serif-display text-[36px] leading-[1.05] text-clause-heading md:text-[52px]"/><Reveal delay={.2}><p className="mt-7 max-w-[560px] font-grotesk text-[16px] leading-[1.8] text-clause-muted">Alcyone Law was established to bridge the gap between complex legal rules and the real lives they affect. From building a future in the UK to protecting family relationships or supporting business growth, the firm combines strategic precision with clear, personal guidance.</p><div className="mt-8"><TextLink to="/coming-soon">Discover Alcyone Law</TextLink></div></Reveal></div></section>}
+function SuccessStories() {
+  return (
+    <section className="border-t border-clause-border">
+      <div className="border-b border-clause-border px-4 py-16 md:px-24 md:py-24">
+        <div className="mx-auto max-w-[680px] md:text-center">
+          <Reveal>
+            <Eyebrow>Success Stories</Eyebrow>
+          </Reveal>
+          <AnimatedText
+            as="h2"
+            text={"Outcomes that changed\nwhat came next."}
+            className="mt-5 font-serif-display font-normal leading-[1.12] text-clause-heading text-[clamp(1.75rem,1rem+3vw,3rem)]"
+          />
+          <Reveal delay={0.15}>
+            <p className="mt-5 font-grotesk text-[16px] leading-[1.6] text-clause-muted md:text-[17px]">
+              A selection of matters illustrating the careful preparation and strategic thinking behind Alcyone Law's work.
+            </p>
+          </Reveal>
+        </div>
+      </div>
 
-function Services(){return <section className="border-b border-clause-border px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-[1380px]"><Reveal><Eyebrow>Our Expertise</Eyebrow></Reveal><div className="mt-5 grid gap-5 lg:grid-cols-[.85fr_1.15fr]"><AnimatedText as="h2" text={"Specialist advice for\nlife across borders."} className="font-serif-display text-[38px] leading-[1.04] text-clause-heading md:text-[56px]"/><Reveal delay={.15}><p className="max-w-[580px] font-grotesk text-[16px] leading-[1.75] text-clause-muted lg:pt-2">Focused expertise in UK immigration and family law, tailored to individuals, families and businesses.</p></Reveal></div><RevealGroup className="mt-12 grid gap-px overflow-hidden border border-clause-border bg-clause-border lg:grid-cols-3" stagger={.08}>{services.map(s=><RevealItem key={s.title} className="group bg-clause-surface"><Link to="/coming-soon"><div className="aspect-[4/3] overflow-hidden"><img src={s.img} alt={s.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"/></div><div className="p-6 md:p-8"><span className="font-grotesk text-[11px] font-semibold tracking-[.18em] text-clause-sage">{s.n}</span><h3 className="mt-3 font-serif-display text-[27px] text-clause-heading">{s.title}</h3><p className="mt-3 font-grotesk text-[15px] leading-[1.65] text-clause-muted">{s.text}</p><div className="mt-5 flex flex-wrap gap-2">{s.tags.map(t=><span key={t} className="border border-clause-border px-3 py-1.5 font-grotesk text-[10px] uppercase tracking-[.08em] text-clause-muted">{t}</span>)}</div></div></Link></RevealItem>)}</RevealGroup></div></section>}
+      <div className="border-b border-clause-border md:px-8">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 md:gap-x-8" stagger={0.12}>
+          {STORIES.map((story) => (
+            <RevealItem
+              key={story.title}
+              className="h-full border-b border-clause-border md:border-x md:border-b-0 md:border-clause-border"
+            >
+              <Link to="/coming-soon" className="group flex h-full flex-col">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <RevealImage
+                    src={story.image}
+                    alt={story.title}
+                    wrapperClassName="h-full w-full"
+                    className="h-full w-full object-cover"
+                    hoverScale
+                  />
+                  <div className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center bg-clause-bg md:h-12 md:w-12">
+                    <ArrowUpRight
+                      className="h-4 w-4 text-clause-pink transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-6 md:p-8">
+                  <span className="font-grotesk text-[12px] font-semibold tracking-[0.14em] text-clause-sage">
+                    {story.number} · {story.category}
+                  </span>
+                  <h3 className="mt-3 font-serif-display text-[22px] leading-[1.2] text-clause-heading md:text-[24px]">
+                    {story.title}
+                  </h3>
+                  <p className="mt-3 font-grotesk text-[15px] leading-[1.6] text-clause-muted md:text-[16px]">
+                    {story.description}
+                  </p>
+                </div>
+              </Link>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </div>
 
-function Approach(){const items=[["01","Clarity","Straightforward advice that helps you understand your position and make confident decisions."],["02","Strategy","Every detail considered, risks anticipated and each matter approached with a clear plan."],["03","Client Focus","Advice shaped around the individual, family or business behind the legal issue."],["04","Integrity","Realistic guidance delivered with professionalism and honest judgment."]];return <section className="bg-clause-pink px-4 py-16 text-clause-onaccent md:px-8 md:py-24"><div className="mx-auto max-w-[1380px]"><p className="font-grotesk text-[11px] font-semibold uppercase tracking-[.18em] text-clause-sage">Our Approach</p><h2 className="mt-5 max-w-[760px] font-serif-display text-[39px] leading-[1.03] md:text-[58px]">Clear thinking when<br/>the path feels uncertain.</h2><div className="mt-14 grid border-t border-white/15 md:grid-cols-2 lg:grid-cols-4">{items.map((x,i)=><div key={x[0]} className={`py-7 md:px-6 ${i>0?'border-t border-white/15 md:border-l md:border-t-0':''}`}><span className="font-grotesk text-[11px] tracking-[.18em] text-clause-sage">{x[0]}</span><h3 className="mt-4 font-serif-display text-[25px]">{x[1]}</h3><p className="mt-3 font-grotesk text-[14px] leading-[1.7] text-clause-onaccent/65">{x[2]}</p></div>)}</div></div></section>}
+      <div className="border-b border-clause-border px-4 py-10 md:px-24 md:py-14">
+        <div className="flex justify-center">
+          <TextLink to="/coming-soon">View Success Stories</TextLink>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-function Stories(){return <section className="bg-clause-bg px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-[1380px]"><Reveal><Eyebrow>Success Stories</Eyebrow></Reveal><AnimatedText as="h2" text={"Outcomes that changed\nwhat came next."} className="mt-5 font-serif-display text-[39px] leading-[1.03] text-clause-heading md:text-[58px]"/><div className="mt-12 grid gap-6 lg:grid-cols-12">{stories.map((s,i)=><Reveal key={s.title} className={i===0?'lg:col-span-7':'lg:col-span-5'}><Link to="/coming-soon" className="group block border border-clause-border bg-clause-surface"><div className={`${i===0?'aspect-[16/9]':'aspect-[16/9]'} overflow-hidden`}><img src={s.img} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"/></div><div className="p-6 md:p-8"><p className="font-grotesk text-[10px] font-semibold uppercase tracking-[.16em] text-clause-pink">{s.tag}</p><h3 className="mt-3 font-serif-display text-[25px] leading-[1.15] text-clause-heading md:text-[30px]">{s.title}</h3><p className="mt-3 font-grotesk text-[14px] leading-[1.7] text-clause-muted">{s.text}</p><span className="mt-6 inline-flex items-center gap-2 font-grotesk text-[11px] font-semibold uppercase tracking-[.1em] text-clause-pink">Read the story <ArrowUpRight className="h-3.5 w-3.5"/></span></div></Link></Reveal>)}</div></div></section>}
+function ExperienceSection() {
+  return (
+    <section className="border-t border-clause-border">
+      <div className="grid grid-cols-1 md:grid-cols-[52fr_48fr]">
+        <div className="px-4 py-14 md:border-r md:border-clause-border md:pl-8 md:pr-16 md:py-24">
+          <Reveal>
+            <Eyebrow>Focused Practice</Eyebrow>
+          </Reveal>
+          <AnimatedText
+            as="h2"
+            text={"Specialist experience.\nPersonal perspective."}
+            className="mt-5 font-serif-display font-normal leading-[1.15] text-clause-heading text-[clamp(1.625rem,1rem+2.6vw,2.5rem)]"
+          />
+          <Reveal delay={0.2}>
+            <p className="mt-6 max-w-[470px] font-grotesk text-[15px] leading-[1.7] text-clause-muted md:text-[16px]">
+              Alcyone Law focuses on immigration and family matters from its London practice. The firm's approach combines specialist knowledge, strategic preparation and an understanding of how legal decisions affect real lives.
+            </p>
+          </Reveal>
+          <Reveal delay={0.28}>
+            <div className="mt-8">
+              <TextLink to="/coming-soon">Meet our people</TextLink>
+            </div>
+          </Reveal>
+        </div>
 
-function Founder(){return <section className="grid border-y border-clause-border bg-white md:grid-cols-[46fr_54fr]"><div className="p-4 md:p-8 lg:p-12"><RevealImage src={zahraImg} alt="Zahra Mohamed, Founder and Principal Solicitor" wrapperClassName="h-full min-h-[560px]" className="h-full w-full object-cover object-top"/></div><div className="flex flex-col justify-center px-4 py-16 md:px-12 lg:px-20"><Reveal><Eyebrow>Founder & Principal Solicitor</Eyebrow></Reveal><h2 className="mt-5 font-serif-display text-[46px] leading-none text-clause-heading md:text-[62px]">Zahra Mohamed</h2><Reveal delay={.12}><blockquote className="mt-8 max-w-[680px] border-l border-clause-sage pl-6 font-serif-display text-[25px] leading-[1.35] text-clause-heading md:text-[30px]">“Behind every immigration matter is a life being built, a family being reunited or a future taking shape.”</blockquote><p className="mt-7 max-w-[620px] font-grotesk text-[16px] leading-[1.8] text-clause-muted">With more than a decade of specialist immigration experience and personal understanding of the immigration journey, Zahra’s practice brings together technical expertise, strategic judgment and empathy.</p><div className="mt-8"><TextLink to="/coming-soon">Meet Zahra</TextLink></div></Reveal></div></section>}
+        <div className="grid grid-cols-2">
+          <RevealImage
+            src={aboutImage}
+            alt="Central London architecture"
+            width={1024}
+            height={1280}
+            wrapperClassName="h-full"
+            className="h-full w-full object-cover"
+            hoverScale
+          />
+          <RevealImage
+            src={ctaImage}
+            alt="London professional district at evening"
+            width={1600}
+            height={900}
+            wrapperClassName="h-full border-l border-clause-border"
+            className="h-full w-full object-cover"
+            hoverScale
+          />
+        </div>
+      </div>
 
-function Why(){const pts=["Specialist focus on immigration and family law","Strategic preparation from the outset","Clear communication without unnecessary complexity","Personal understanding behind every case"];return <section className="bg-[#ece8e2] px-4 py-16 md:px-8 md:py-24"><div className="mx-auto grid max-w-[1380px] gap-12 lg:grid-cols-[.9fr_1.1fr]"><div><Reveal><Eyebrow>Why Alcyone</Eyebrow></Reveal><AnimatedText as="h2" text={"Expertise is important.\nHow it is delivered matters too."} className="mt-5 font-serif-display text-[38px] leading-[1.04] text-clause-heading md:text-[54px]"/></div><div className="border-t border-clause-line">{pts.map((p,i)=><Reveal key={p} className="flex items-start gap-5 border-b border-clause-line py-6"><span className="mt-1 font-grotesk text-[11px] text-clause-pink">0{i+1}</span><p className="font-serif-display text-[24px] leading-[1.3] text-clause-heading">{p}</p></Reveal>)}</div></div></section>}
+      <StatsBand />
+    </section>
+  );
+}
 
-function Testimonials(){return <section className="px-4 py-16 md:px-8 md:py-24"><div className="mx-auto max-w-[1380px]"><Reveal><Eyebrow>Client Words</Eyebrow></Reveal><AnimatedText as="h2" text={"Trusted through life's\nmost important moments."} className="mt-5 font-serif-display text-[39px] leading-[1.03] text-clause-heading md:text-[58px]"/><div className="mt-12 grid gap-px border border-clause-border bg-clause-border lg:grid-cols-3">{["Professional, clear and reassuring from the very beginning.","A thoughtful approach that made a difficult process feel manageable.","Strategic advice, excellent communication and genuine care throughout."].map((q,i)=><div key={q} className="bg-clause-surface p-7 md:p-9"><div className="flex gap-1">{Array.from({length:5}).map((_,j)=><Star key={j} className="h-3.5 w-3.5 fill-clause-sage text-clause-sage"/>)}</div><p className="mt-6 font-serif-display text-[23px] leading-[1.45] text-clause-heading">“{q}”</p><p className="mt-7 font-grotesk text-[11px] font-semibold uppercase tracking-[.14em] text-clause-muted">Alcyone Law Client</p></div>)}</div><p className="mt-5 font-grotesk text-[11px] text-clause-muted">Demo presentation copy — replace with approved client quotations before publication.</p></div></section>}
+function Index() {
+  return (
+    <div className="min-h-screen bg-clause-bg px-2 pb-2 md:p-0">
+      <div className="mx-auto min-h-[calc(100vh-0.5rem)] max-w-[1320px] border border-clause-border md:min-h-screen md:border-x md:border-y-0">
+        <Navbar />
+        <div className="h-16 lg:hidden" aria-hidden="true" />
 
-function Cta(){return <section className="relative min-h-[520px] overflow-hidden"><img src={ctaImg} alt="London at evening" className="absolute inset-0 h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-r from-[#271019]/95 via-[#271019]/78 to-[#271019]/25"/><div className="relative mx-auto flex min-h-[520px] max-w-[1380px] items-center px-4 py-16 md:px-8"><div className="max-w-[720px] text-clause-onaccent"><p className="font-grotesk text-[11px] font-semibold uppercase tracking-[.18em] text-clause-sage">Start a conversation</p><h2 className="mt-5 font-serif-display text-[43px] leading-[1.02] md:text-[64px]">Your next step starts<br/>with clear advice.</h2><p className="mt-6 max-w-[580px] font-grotesk text-[16px] leading-[1.7] text-clause-onaccent/70">Tell us briefly about your situation and our team will help you understand the next step.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><a href="#contact" className="inline-flex min-h-[52px] items-center justify-center gap-3 bg-clause-onaccent px-7 font-grotesk text-[12px] font-bold uppercase tracking-[.08em] text-clause-pink">Book a Consultation <ArrowRight className="h-4 w-4"/></a><a href={`tel:${FIRM.officeTel}`} className="inline-flex min-h-[52px] items-center justify-center gap-3 border border-white/30 px-7 font-grotesk text-[12px] font-semibold uppercase tracking-[.08em]">Call {FIRM.office}</a></div></div></div></section>}
-
-function Contact(){return <section id="contact" className="scroll-mt-20 border-b border-clause-border bg-clause-bg"><div className="mx-auto grid max-w-[1380px] lg:grid-cols-[.85fr_1.15fr]"><div className="border-b border-clause-border px-4 py-16 md:px-8 lg:border-b-0 lg:border-r lg:px-12 lg:py-24"><Eyebrow>Contact</Eyebrow><h2 className="mt-5 font-serif-display text-[40px] leading-[1.05] text-clause-heading md:text-[52px]">Speak with<br/>Alcyone Law.</h2><p className="mt-6 max-w-[470px] font-grotesk text-[15px] leading-[1.75] text-clause-muted">For immigration or family law support, speak directly with the London team.</p><div className="mt-9 space-y-6 font-grotesk text-[14px] text-clause-cream"><div className="flex gap-4"><MapPin className="h-4 w-4 text-clause-sage"/><span>167–169 Great Portland Street<br/>London W1W 5PF</span></div><div className="flex gap-4"><Phone className="h-4 w-4 text-clause-sage"/><a href={`tel:${FIRM.officeTel}`}>{FIRM.office}</a></div><div className="border-t border-clause-border pt-6 text-[12px] uppercase tracking-[.1em] text-clause-muted">Monday–Friday · 9:00 AM–5:00 PM</div></div></div><div className="px-4 py-16 md:px-8 lg:px-12 lg:py-24"><ConsultationForm/></div></div></section>}
-
-function Index(){return <div className="min-h-screen bg-clause-bg"><Navbar/><main><Hero/><Trust/><About/><Services/><Approach/><Stories/><Founder/><Why/><Testimonials/><Cta/><Contact/></main><Footer/></div>}
+        <Hero />
+        <HeroStats />
+        <Ribbon className="h-8 border-t border-clause-border" />
+        <Introduction />
+        <ExpertiseStrip />
+        <Services />
+        <Approach />
+        <SuccessStories />
+        <ExperienceSection />
+        <LeadershipBlock />
+        <FinalCta />
+        <Footer />
+      </div>
+      <ScrollDot />
+    </div>
+  );
+}

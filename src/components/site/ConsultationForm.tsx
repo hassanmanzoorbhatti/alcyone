@@ -6,10 +6,13 @@ import { Eyebrow } from "./SiteUi";
 import { Reveal } from "@/components/motion/Reveal";
 
 const SERVICE_OPTIONS = [
-  "Private Immigration",
-  "Business Immigration",
+  "Immigration Law",
+  "Property Law",
+  "Criminal Defence",
   "Family Law",
-  "Other / Not sure yet",
+  "Financial Claims & Debt Recovery",
+  "Business & Legal Disputes",
+  "Not sure yet",
 ];
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -166,7 +169,7 @@ export function ConsultationForm() {
                 name="phone"
                 type="tel"
                 autoComplete="tel"
-                placeholder="+44 (0)20 3393 7333"
+                placeholder="020 8343 6000"
                 className={inputBase}
                 style={{ borderRadius: "1px" }}
                 disabled={status === "submitting"}
@@ -252,7 +255,8 @@ export function ConsultationForm() {
         </button>
 
         <p className="mt-5 max-w-[420px] font-grotesk text-[13px] leading-[1.6] text-clause-muted">
-          Submitting this form does not create a solicitor-client relationship. Please avoid sending confidential information until instructed to do so.
+          Your details are used only to respond to your enquiry. We won't share your information with
+          third parties.
         </p>
       </form>
     </Reveal>

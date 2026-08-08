@@ -89,8 +89,7 @@ export function FinalCta() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.14]"
         style={{
-          backgroundImage:
-            "radial-gradient(rgba(142,155,130,0.9) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(rgba(198,168,117,0.85) 1px, transparent 1px)",
           backgroundSize: "14px 14px",
           WebkitMaskImage: radialMask,
           maskImage: radialMask,
@@ -112,30 +111,30 @@ export function FinalCta() {
       <div className="relative mx-auto max-w-[620px] text-center">
         <Reveal>
           <p className="font-grotesk text-[12px] font-semibold uppercase tracking-[0.16em] text-clause-sage md:text-[13px]">
-            Need legal support?
+            Start a conversation
           </p>
         </Reveal>
         <AnimatedText
           as="h2"
-          text={"Speak with our team\nabout your legal matter."}
-          className="mt-5 font-serif-display font-normal leading-[1.12] text-[#F3F0E8] text-[clamp(1.75rem,1rem+3vw,2.75rem)]"
+          text={"Your next step starts\nwith clear advice."}
+          className="mt-5 font-serif-display font-normal leading-[1.12] text-[#F7F3EE] text-[clamp(1.75rem,1rem+3vw,2.75rem)]"
         />
         <RevealGroup stagger={0.12}>
           <RevealItem>
-            <p className="mx-auto mt-5 max-w-[480px] font-grotesk text-[15px] leading-[1.6] text-[#F3F0E8]/75 md:mt-6 md:text-[17px]">
-              Tell us briefly how we can help and our team will guide you through the next step.
+            <p className="mx-auto mt-5 max-w-[480px] font-grotesk text-[15px] leading-[1.6] text-[#F7F3EE]/75 md:mt-6 md:text-[17px]">
+              Tell us briefly about your situation and speak with the Alcyone Law team about the next step.
             </p>
           </RevealItem>
           <RevealItem className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center md:mt-10">
             <PrimaryButton
-              to="/contact"
-              className="border-[rgba(243,240,232,0.14)] bg-clause-sage !text-clause-ink"
+              href="#contact"
+              className="border-[rgba(247,243,238,0.14)] bg-clause-sage !text-clause-ink"
             >
               Book a Consultation
             </PrimaryButton>
             <a
               href={`tel:${FIRM.officeTel}`}
-              className="inline-flex min-h-[48px] items-center justify-center gap-3 border border-[rgba(243,240,232,0.28)] px-6 py-4 font-grotesk text-[13px] font-bold uppercase tracking-[0.08em] text-[#F3F0E8] transition-colors duration-300 hover:bg-[rgba(243,240,232,0.08)] md:px-7"
+              className="inline-flex min-h-[48px] items-center justify-center gap-3 border border-[rgba(247,243,238,0.28)] px-6 py-4 font-grotesk text-[13px] font-bold uppercase tracking-[0.08em] text-[#F7F3EE] transition-colors duration-300 hover:bg-[rgba(247,243,238,0.08)] md:px-7"
               style={{ borderRadius: "1px" }}
             >
               Call {FIRM.office}

@@ -166,13 +166,13 @@ export function ZigzagPattern({ className = "" }: { className?: string }) {
         <pattern id="zig" width="24" height="24" patternUnits="userSpaceOnUse">
           <path
             d="M0 24 L12 0 L24 24"
-            stroke="rgba(38,55,47,0.28)"
+            stroke="rgba(59,24,40,0.24)"
             strokeWidth="1.25"
             fill="none"
           />
           <path
             d="M0 12 L12 -12 L24 12"
-            stroke="rgba(38,55,47,0.28)"
+            stroke="rgba(59,24,40,0.24)"
             strokeWidth="1.25"
             fill="none"
           />
@@ -204,13 +204,13 @@ export function Ribbon({ className = "" }: { className?: string }) {
         <pattern id="ribbon-zig" width="24" height="24" patternUnits="userSpaceOnUse">
           <path
             d="M0 24 L12 0 L24 24"
-            stroke="rgba(38,55,47,0.24)"
+            stroke="rgba(59,24,40,0.20)"
             strokeWidth="1.25"
             fill="none"
           />
           <path
             d="M0 12 L12 -12 L24 12"
-            stroke="rgba(38,55,47,0.24)"
+            stroke="rgba(59,24,40,0.20)"
             strokeWidth="1.25"
             fill="none"
           />
